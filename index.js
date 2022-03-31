@@ -14,12 +14,6 @@ function placeOrder() {
     return;
   }
 
-  fetch(`${url}/cart`, {
-    body: JSON.stringify({ userId, cart: myCart }),
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  });
-
   fetch(`${url}/checkout`, {
     body: JSON.stringify({ userId }),
     method: 'POST',
@@ -30,22 +24,30 @@ function placeOrder() {
   banner.classList -= 'hidden';
 }
 
+function saveCart() {
+  fetch(`${url}/cart`, {
+    body: JSON.stringify({ userId, cart: myCart }),
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
 function addToCart(id) {
   myCart[id] += 1;
 
-  updateCart();
+  renderCart();
 }
 
-function updateCart() {
+function renderCart() {
   const cartBody = document.getElementById('cart-body');
   cartBody.innerHTML = "";
 
-  addRow(cartBody, 'bread');
-  addRow(cartBody, 'milk');
-  addRow(cartBody, 'eggs');
+  renderRow(cartBody, 'bread');
+  renderRow(cartBody, 'milk');
+  renderRow(cartBody, 'eggs');
 }
 
-function addRow(cartBody, id) {
+function renderRow(cartBody, id) {
   const name = document.querySelector(`#${id} td:first-of-type`).innerText;
 
   const newRow = document.createElement('tr');
