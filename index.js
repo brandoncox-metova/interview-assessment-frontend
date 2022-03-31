@@ -14,6 +14,8 @@ function placeOrder() {
     return;
   }
 
+  saveCart();
+
   fetch(`${url}/checkout`, {
     body: JSON.stringify({ userId }),
     method: 'POST',
