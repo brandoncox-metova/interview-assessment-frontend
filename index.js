@@ -8,6 +8,12 @@ const myCart = {
 };
 
 function placeOrder() {
+  const total = myCart.bread + myCart.milk + myCart.eggs;
+  if (total === 0) {
+    alert('You cannot submit an empty cart.');
+    return;
+  }
+
   fetch(`${url}/cart`, {
     body: JSON.stringify({ userId, cart: myCart }),
     method: 'POST',
